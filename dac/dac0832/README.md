@@ -9,4 +9,8 @@ synthesized示例是sine-wave（正弦波），square（方波），triangular（三角波），serr
 其中使用P1端口连接开关作为模式切换，同样使用直通模式。  
 synthesiszed-double是使用双缓冲模式正弦波、方波示例。  
 
+## 电路图
+
+### 直通模式
+
 ![image](https://github.com/jackjenson/8051-template/blob/master/dac/dac0832/img/dac0832.png)
