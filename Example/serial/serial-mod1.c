@@ -84,6 +84,6 @@ void serialHandler() interrupt 4
 {
     if(GetState(RI)){
 		P2 = SBUF;
+        RI = 0;
     } 
-	RI = 0;
 }
