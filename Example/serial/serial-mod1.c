@@ -74,10 +74,7 @@ void main(){
         if(i > 9){
             i = 0;
         }
-		delay(10000);
-		
     }
-    
 }
 
 void serialHandler() interrupt 4
@@ -85,5 +82,6 @@ void serialHandler() interrupt 4
     if(GetState(RI)){
 		P2 = SBUF;
         RI = 0;
+        delay(10000);
     } 
 }
