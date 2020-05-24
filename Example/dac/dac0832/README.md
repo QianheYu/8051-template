@@ -13,4 +13,4 @@ synthesiszed-double是使用双缓冲模式正弦波、方波示例。
 
 ### 直通模式
 
-![image](https://github.com/jackjenson/8051-template/blob/master/dac/dac0832/img/dac0832.png)
+![image](https://github.com/jackjenson/8051-template/blob/master/Example/Img/dac0832-example.png)
