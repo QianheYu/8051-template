@@ -52,25 +52,25 @@ void TimerInit(){
     TL1 = 0xfd;
 }
 
+/**
+ * We need delay to transform data, because it must work after slave ready. 
+*/
 void main(){
-    int i = 0;
+    int i = 15;
     InterruptInit();
     TimerInit();
     SetSerial(0x50);
     Enable_Timer(TR1);
+	while(!i){
+		if(TF1){
+			i--;
+		}
+	}
     while (1)
     {
-//        switch(~KEY){
-//            case 1:
-//                SBUF = ~words[i++];
-//                break;
-//            default:
-//                SBUF = 0xff;
-//        }
 		SBUF = ~words[i++];
-		while(!TI){
-			TI = 0;
-		}
+		while(!TI);
+		TI = 0;
         if(i > 9){
             i = 0;
         }
