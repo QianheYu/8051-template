@@ -7,3 +7,5 @@ serial-mod1是本机串口通信示例代码
 
 serial-mod1代码电路
 ![image](https://github.com/QianheYu/8051-template/blob/master/Example/Img/serial-example.png)
+mast-slave by serial电路  
+![image](https://github.com/QianheYu/8051-template/blob/master/Example/Img/serial-mast-slave.png)
