@@ -1,6 +1,5 @@
 #include "REG52.h"
 #define WORD P2
-#define KEY P1^0
 /**
  * Define the function about Timer, Interrupt and Serial
  * to make them looks great more.
@@ -25,8 +24,6 @@
 #define Disable_Reseive() (REN = 0)
 #define GetState(X) (X)
 
-code unsigned char words[10] = {0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f};  //use 7SEG-COM-ANODE
-
 /**
  * @function Init Interrupt
 */
@@ -40,10 +37,6 @@ void InterruptInit(){
 	Enable_Interrupt(EA);
 }
 
-void delay(unsigned int time){
-	while(time--);
-}
-
 /**
  * @function Init Timer.
 */
@@ -54,14 +47,14 @@ void TimerInit(){
 }
 
 void main(){
-    int i = 0;
+    int i = 1;
     InterruptInit();
     TimerInit();
     SetSerial(0x50);
     Enable_Timer(TR1);
     while (1)
     {
-        
+
     }
 }
 
@@ -69,7 +62,6 @@ void serialHandler() interrupt 4
 {
     if(GetState(RI)){
 		P2 = SBUF;
-        RI = 0;
-        delay(10000);
+		RI = 0;
     } 
 }
