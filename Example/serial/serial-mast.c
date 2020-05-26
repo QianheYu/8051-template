@@ -53,7 +53,7 @@ void TimerInit(){
 }
 
 void main(){
-    int i = 1;
+    int i = 0;
     InterruptInit();
     TimerInit();
     SetSerial(0x50);
