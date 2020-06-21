@@ -97,7 +97,11 @@ void TimerHandler() interrupt 3
 	}
 	i = (++i)%period;
 }
-
+/**
+ * 外部中断0
+ * 读取ADC芯片的转换结果
+ * ch为0时读周期，为1时读幅值
+*/
 void handler() interrupt 0
 {
 	uchar temp;
