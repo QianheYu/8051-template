@@ -90,7 +90,7 @@ void TimerHandler() interrupt 3
 	static uchar i = 0;
 	TH1 = 0xFC;
 	TL1 = 0x18;
-	if(i >= dut){
+	if(i >= dut*period/0.1){
 		P2 = 0x00;
 	}
 	else
