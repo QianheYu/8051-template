@@ -1,0 +1,86 @@
+C51 COMPILER V9.60.0.0   FORMATDATA                                                        07/08/2020 13:42:40 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE FORMATDATA
+OBJECT MODULE PLACED IN .\Objects\formatdata.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE src\formatdata.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc) DEBUG OBJECTEXTE
+                    -ND PRINT(.\Listings\formatdata.lst) OBJECT(.\Objects\formatdata.obj)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "DS18B02.h"
+*** WARNING C318 IN LINE 2 OF src\formatdata.c: can't open file 'DS18B02.h'
+   3          
+   4          char string[] = "TEMP:    . C";
+   5          char *motorstate = "SPEED:0  ";
+   6          char *beepstate = "normal ";
+   7          
+   8          //extern char *string;
+   9          //extern char *motorstate;
+  10          //extern char *beepstate;
+  11          unsigned short width;
+  12          bit flag = 0;
+  13          sbit beep = P2^4;
+  14          
+  15          void formatData()
+  16          {
+  17   1              int dat = getTemperature();
+*** WARNING C206 IN LINE 17 OF src\formatdata.c: 'getTemperature': missing function-prototype
+  18   1              int temp = dat/10;
+  19   1              string[7] = '0' + (dat%1000/100);
+  20   1              string[8] = '0' + (dat%100/10);
+  21   1              string[10] = '0' + (dat%10);
+  22   1              if(flag)
+  23   1              {
+  24   2                      string[5] = '-';
+  25   2              }
+  26   1              else
+  27   1              {
+  28   2                      string[5] = ' ';
+  29   2              }
+  30   1      
+  31   1              if(!flag)
+  32   1              {
+  33   2                      if(temp > 25)
+  34   2                      {
+  35   3                              if(temp > 30)
+  36   3                              {
+  37   4                                      width = 10;
+  38   4                                      beep = 0;
+  39   4                                      motorstate = "SPEED:2";
+  40   4                                      beepstate = "warning";
+  41   4                              }
+  42   3                              else
+  43   3                              {
+  44   4                                      width = (temp - 25)*2;
+  45   4                                      beep = 1;
+  46   4                                      motorstate = "SPEED:1";
+  47   4                                      beepstate = "normal ";
+  48   4                              }
+  49   3                      }
+  50   2                      else
+  51   2                      {
+  52   3                              width = 0;
+C51 COMPILER V9.60.0.0   FORMATDATA                                                        07/08/2020 13:42:40 PAGE 2   
+
+  53   3                              beep = 1;
+  54   3                              motorstate = "SPEED:0";
+  55   3                              beepstate = "normal ";
+  56   3                      }
+  57   2              }
+  58   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    217    ----
+   CONSTANT SIZE    =     50    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     21       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      1    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,111 @@
+C51 COMPILER V9.60.0.0   DS18B20                                                           07/08/2020 13:42:39 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE DS18B20
+OBJECT MODULE PLACED IN .\Objects\DS18B20.obj
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE src\DS18B20.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc) DEBUG OBJECTEXTEND 
+                    -PRINT(.\Listings\DS18B20.lst) OBJECT(.\Objects\DS18B20.obj)
+
+line level    source
+
+   1          #include "reg52.h"
+   2          #include "DS18B20.h"
+   3          
+   4          sbit TEMPERATURE = P2^3;
+   5          extern bit flag;
+   6          static void delay(unsigned int time)
+   7          {
+   8   1              while(time--);
+   9   1      }
+  10          
+  11          void Reset()
+  12          {
+  13   1              TEMPERATURE = 1;
+  14   1              delay(2);
+  15   1              TEMPERATURE = 0;
+  16   1              delay(60);
+  17   1              TEMPERATURE = 1;
+  18   1              delay(30);
+  19   1      }
+  20          
+  21          void write(unsigned char dat)
+  22          {
+  23   1              int i;
+  24   1              for(i = 8; i > 0; i--)
+  25   1              {
+  26   2                      TEMPERATURE = 0;
+  27   2                      TEMPERATURE = dat&0x01;
+  28   2                      delay(6);
+  29   2                      TEMPERATURE = 1;
+  30   2                      dat >>= 1;
+  31   2              }
+  32   1      }
+  33          
+  34          unsigned char read()
+  35          {
+  36   1              unsigned char i;
+  37   1              unsigned char dat;
+  38   1              for(i = 8; i > 0; i--)
+  39   1              {
+  40   2                      TEMPERATURE = 0;
+  41   2                      delay(1);
+  42   2                      dat >>= 1;
+  43   2                      TEMPERATURE = 1;
+  44   2                      if(TEMPERATURE)
+  45   2                      {
+  46   3                              dat |= 0x80;
+  47   3                              
+  48   3                      }
+  49   2                      delay(2);
+  50   2              }
+  51   1              return (dat);
+  52   1      }
+  53          
+  54          
+C51 COMPILER V9.60.0.0   DS18B20                                                           07/08/2020 13:42:39 PAGE 2   
+
+  55          unsigned int getTemperature()
+  56          {
+  57   1              unsigned char a, b;
+  58   1              unsigned int dat;
+  59   1              Reset();
+  60   1              write(SKROM);
+  61   1              write(CVTP);
+  62   1              Reset();
+  63   1              
+  64   1              write(SKROM);
+  65   1              write(RDSC);
+  66   1              a = read();
+  67   1              b = read();
+  68   1              
+  69   1              dat = b;
+  70   1              dat <<= 8;
+  71   1              dat = dat | a;
+  72   1              
+  73   1              if(dat < 0x07ff)
+  74   1              {
+  75   2                      flag = 0;
+  76   2              }
+  77   1              else
+  78   1              {
+  79   2                      dat = ~dat + 1;
+  80   2                      flag = 1;
+  81   2              }
+  82   1              dat *= 0.625;
+  83   1      
+  84   1              return (dat);
+  85   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    204    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
