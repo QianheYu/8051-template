@@ -1,13 +1,9 @@
 #include "reg52.h"
 #include "DS18B02.h"
 
-char string[] = "TEMP:    . C";
-char *motorstate = "SPEED:0  ";
-char *beepstate = "normal ";
-
-//extern char *string;
-//extern char *motorstate;
-//extern char *beepstate;
+extern char string[];
+extern char *motorstate;
+extern char *beepstate;
 unsigned short width;
 bit flag = 0;
 sbit beep = P2^4;
