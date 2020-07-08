@@ -10,7 +10,6 @@
 
 #include "REG52.H"
 #include "LCD1602.H"
-//#include "DS18B20.h"
 #include "PWM.h"
 
 
